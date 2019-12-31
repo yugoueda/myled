@@ -29,8 +29,7 @@ static ssize_t led_write(struct file* filp, const char* buf, size_t count, loff_
 	  if(0 <= (int) c - (int) '0' && (int) c - (int) '0' <= 9){
              for(a=0; a<5; a++){
                gpio_base[7] = 1 << 25;
-               printf(msleep(((int) c - (int) '0') * 1000);
-               msleep(250);
+               msleep(((int) c - (int) '0') * 1000);
                gpio_base[10] = 1 << 25;
                msleep(250);
              }
