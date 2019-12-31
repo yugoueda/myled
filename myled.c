@@ -7,7 +7,7 @@
 #include <linux/delay.h>
 
 
-MODULE_AUTHOR("Fumiki Otsuka");
+MODULE_AUTHOR("Ryuichi Ueda,Yugo Ueda");
 MODULE_DESCRIPTION("driver for LED control");
 MODULE_LICENSE("GPL");
 MODULE_VERSION("0.1");
@@ -27,8 +27,9 @@ static ssize_t led_write(struct file* filp, const char* buf, size_t count, loff_
 	
         if(c && c != '\n'){
 	  if(0 <= (int) c - (int) '0' && (int) c - (int) '0' <= 9){
-             for(a=0; a<((int) c - (int) '0')/2; a++){
+             for(a=0; a<5; a++){
                gpio_base[7] = 1 << 25;
+               printf(msleep(((int) c - (int) '0') * 1000);
                msleep(250);
                gpio_base[10] = 1 << 25;
                msleep(250);
@@ -36,7 +37,7 @@ static ssize_t led_write(struct file* filp, const char* buf, size_t count, loff_
           }
           else{
               gpio_base[7] = 1 << 25;
-              msleep(1000);
+              msleep(500);
           }
          } 
             
