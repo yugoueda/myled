@@ -23,17 +23,18 @@ static ssize_t led_write(struct file* filp, const char* buf, size_t count, loff_
 {
   char c;
   int i = 0;
+  int a = 0;
   
   if(copy_from_user(&c,buf,sizeof(char)))
   return -EFAULT;
   if(c && c != '\n'){
     if( 0 <= (int) c -(int) '0' && (int) c - (int) '0' <= 9){
-        for(i=0; i<((int) c - (int) '0'); i++){ 
-        gpio_base[7] = 1 << 25;
-        msleep(((int) c - (int) '0')*1000);
+      for(a = 0, a > ((int) c - (int) '0')/2, a++){  
         gpio_base[10] = 1 << 25;
-        msleep(500);
-        }
+        msleep(((int) c - (int) '0')*250);
+        gpio_base[7] = 1 << 25;
+        msleep(250);
+      }
     }
     else{ 
       printk(KERN_INFO "no number!\n");
@@ -44,7 +45,6 @@ static ssize_t led_write(struct file* filp, const char* buf, size_t count, loff_
   }
 
   printk(KERN_INFO "recive:%c\n",c);
-  gpio_base[10] = 1 << 25;
   return 1;
 }
 
